@@ -1,9 +1,10 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
+	"gin-gin-gin/App"
+	"gin-gin-gin/App/Services"
 	. "gin-gin-gin/AppInit"
-	"gin-gin-gin/Models"
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
@@ -11,11 +12,18 @@ func main() {
 	router:=gin.Default()
 	v1:=router.Group("v1")
 	{
-		v1.Handle(HTTP_METHOD_GET,"/prods", func(context *gin.Context) {
-				prods:=Models.BookList{}
-				GetDB().Limit(10).Order("book_id desc").Find(&prods)
-				context.JSON(200,prods)
-		})
+		//v1.Handle(HTTP_METHOD_GET,"/prods", func(context *gin.Context) {
+		//		prods:=Models.BookList{}
+		//		GetDB().Limit(10).Order("book_id desc").Find(&prods)
+		//		context.JSON(200,prods)
+		//})
+
+		bs:=&Services.BookService{}
+		bookListHandler:=App.RegisterHandler(Services.BookListEndPoint(bs),Services.CreateBookListRequest(),
+			Services.CreateBookListResponse())
+		v1.Handle(HTTP_METHOD_GET,"/prods",bookListHandler)
+
+
 	}
 	router.Run(SERVER_ADDRESS)
 }

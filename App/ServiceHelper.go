@@ -1,4 +1,4 @@
-package AppInit
+package App
 
 import (
 	"context"
