@@ -8,23 +8,37 @@ import (
 func CreateBookListRequest() App.EncodeRequestFunc{
 	return func(context *gin.Context) (i interface{}, e error) {
 		bReq:=&BookListRequest{}
-		err:=context.BindQuery(bReq) //和框架有关   /v1/books?size=100
+		err:=context.ShouldBindQuery(bReq) //和框架有关   /v1/books?size=100
 		if err!=nil{
 			return nil,err
 		}
 		return bReq,nil
 	}
 }
+//加载图书详细请求函数
 func CreateBookDetailRequest() App.EncodeRequestFunc{
 	return func(context *gin.Context) (i interface{}, e error) {
 		bReq:=&BookDetailRequest{}
-		err:=context.BindUri(bReq)
+		err:=context.ShouldBindUri(bReq)
 		if err!=nil{
 			return nil,err
 		}
 		return bReq,nil
 	}
 }
+
+func CreateBookFavRequest() App.EncodeRequestFunc{
+	return func(context *gin.Context) (i interface{}, e error) {
+		bReq:=&BookMetaRequest{}
+		err:=context.ShouldBindJSON(bReq)
+		if err!=nil{
+			return nil,err
+		}
+		bReq.Type="fav"
+		return bReq,nil
+	}
+}
+
 
 func CreateBookResponse()  App.DecodeResponseFunc  {
 	return func(context *gin.Context, res interface{}) error {

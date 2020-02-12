@@ -1,23 +1,29 @@
 package AppInit
 
 import (
+	"fmt"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"log"
 )
 
 var db *gorm.DB
+
 func init() {
 	var err error
 	db, err = gorm.Open("mysql",
-		"root:123456@tcp(localhost:3306)/gin?charset=utf8mb4&parseTime=True&loc=Local")
+		MYSQL_DSN)
 	if err != nil {
 		log.Fatal(err)
 	}
 	db.SingularTable(true)
-	db.DB().SetMaxIdleConns(10)
-	db.DB().SetMaxOpenConns(50)
+	db.DB().SetMaxIdleConns(MYSQL_MAXIDLE)
+	db.DB().SetMaxOpenConns(MYSQL_MAXCONN)
+	fmt.Println("当前连接池",MYSQL_MAXCONN,MYSQL_MAXIDLE)
+	//
+	//db.LogMode(true)
 }
 func  GetDB() *gorm.DB {
 	return db
 }
+
