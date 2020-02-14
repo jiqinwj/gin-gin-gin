@@ -2,6 +2,7 @@ package Jobs
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"gin-gin-gin/AppInit"
 	"gin-gin-gin/Models"
@@ -27,7 +28,7 @@ where c.rownum<=10`
 			b,_:=json.Marshal(prods)
 			cache:=&Models.BooksCache{CacheType:Models.CacheType_RankList,CacheContent:string(b),UpdateTime:time.Now()}
 			AppInit.GetDB().Set("gorm:insert_option",
-				"ON DUPLICATE KEY UPDATE update_time=now()").Create(cache)
+				fmt.Sprintf("ON DUPLICATE KEY UPDATE update_time=now(),cache_content='%s'",string(b))).Create(cache)
 			log.Println("排行榜缓存生成成功")
 		}
 	})

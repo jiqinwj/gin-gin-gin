@@ -5,6 +5,7 @@ import (
 	"gin-gin-gin/App"
 )
 //图书列表 请求参数获取
+//@gen(id="list_req")
 func CreateBookListRequest() App.EncodeRequestFunc{
 	return func(context *gin.Context) (i interface{}, e error) {
 		bReq:=&BookListRequest{}
@@ -16,6 +17,7 @@ func CreateBookListRequest() App.EncodeRequestFunc{
 	}
 }
 //加载图书详细请求函数
+//@gen(id="detail_req")
 func CreateBookDetailRequest() App.EncodeRequestFunc{
 	return func(context *gin.Context) (i interface{}, e error) {
 		bReq:=&BookDetailRequest{}
@@ -26,7 +28,7 @@ func CreateBookDetailRequest() App.EncodeRequestFunc{
 		return bReq,nil
 	}
 }
-
+//@gen(id="fav_req")
 func CreateBookFavRequest() App.EncodeRequestFunc{
 	return func(context *gin.Context) (i interface{}, e error) {
 		bReq:=&BookMetaRequest{}
@@ -39,7 +41,7 @@ func CreateBookFavRequest() App.EncodeRequestFunc{
 	}
 }
 
-
+//@gen(order=4,id="book_rsp")
 func CreateBookResponse()  App.DecodeResponseFunc  {
 	return func(context *gin.Context, res interface{}) error {
 		context.JSON(200,res)

@@ -8,4 +8,5 @@
 [GIN-debug] GET    /v1/prods/:id             --> gin-gin-gin/App.RegisterHandler.func1 (3 handlers)
 [GIN-debug] POST   /v1/prods/fav             --> gin-gin-gin/App.RegisterHandler.func1 (3 handlers)
 [GIN-debug] Listening and serving HTTP on :8080
-[GIN] 2020/02/13 - 01:06:57 | 200 |    5.970362ms |             ::1 | POST     /v1/prods/fav
+[GIN] 2020/02/14 - 16:45:15 | 200 |     9.49208ms |             ::1 | GET      /v1/prods
+[GIN] 2020/02/14 - 16:45:15 | 404 |         842ns |             ::1 | GET      /favicon.ico

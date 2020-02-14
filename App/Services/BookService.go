@@ -16,6 +16,8 @@ func(this *BookService) LoadBookList(req  *BookListRequest)  (*Models.BookList,e
 	if req.Type=="top"{
 		return  this.LoadBookTopList(req)
 	}
+
+
     db:=AppInit.GetDB().Limit(req.Size).Order("book_id desc").Find(prods)
  	if db.Error!=nil{
 		return nil,db.Error
@@ -53,8 +55,9 @@ func(this *BookService) LoadBookTopList(req  *BookListRequest)  (*Models.BookLis
 func(this *BookService) BookFav(req *BookMetaRequest) error  {
 
 	tx:=AppInit.GetDB().Begin()
-	err1:= Models.NewBookMeta("fav","1",req.BookID).Save(tx) //元数据表
 	err2:=Models.NewBookFav(req.BookID,req.UserID).Save(tx) //商品收藏表
+	err1:= Models.NewBookMeta("fav","1",req.BookID).Save(tx) //元数据表
+
 
 	if err1!=nil || err2!=nil{
 		tx.Rollback()
@@ -63,5 +66,7 @@ func(this *BookService) BookFav(req *BookMetaRequest) error  {
 		tx.Commit()
 		return nil
 	}
+
+
 }
 
