@@ -2,16 +2,12 @@ package autocode
 
 import (
 	"github.com/gin-gonic/gin"
-	 "io"
-      "log"
-      "os"
+	"io"
+	"os"
 
-	 "gin-gin-gin/App"
+	"gin-gin-gin/App"
 
-
-	 "gin-gin-gin/App/Services"
-
-
+	"gin-gin-gin/App/Services"
 )
 var (
  Registerhandler_fun=App.RegisterHandler( Booklistendpoint_endpoint, Createbooklistrequest_encoderequestfunc, Createbookresponse_decoderesponsefunc)
@@ -21,23 +17,25 @@ var (
  Createbookdetailrequest_encoderequestfunc=Services.CreateBookDetailRequest()
  Createbookfavrequest_encoderequestfunc=Services.CreateBookFavRequest()
  Booklistendpoint_endpoint=Services.BookListEndPoint(&Services.BookService{})
- Bookdetailendpoint_endpoint=Services.BookDetailEndPoint(&Services.BookService{})
+
+ Bookdetailendpoint_endpoint=Services.BookDetailCache()(Services.BookDetailEndPoint(&Services.BookService{}))
+
  Bookfavendpoint_endpoint=Services.BookFavEndPoint(&Services.BookService{})
  Createbookresponse_decoderesponsefunc=Services.CreateBookResponse()
  Test_string=Services.Test("",0,"")
 
 )
 func GetAutoRouter() *gin.Engine{
-    logFile,err:= os.OpenFile("gin-log.log",os.O_RDWR|os.O_CREATE|os.O_TRUNC,0777)
-	gin.DefaultWriter=io.MultiWriter(logFile)
+    //logFile,err:= os.OpenFile("gin-log.log",os.O_RDWR|os.O_CREATE|os.O_TRUNC,0777)
+	//gin.DefaultWriter=io.MultiWriter(logFile)
 
 	file, _ := os.Create("access.log")
 	//gin.DefaultWriter = file
 	gin.DefaultWriter = io.MultiWriter(file)// 效果是一样的
 
-	if err!=nil{
-		log.Fatal("日志文件创建失败",err)
-	}
+	//if err!=nil{
+	//	log.Fatal("日志文件创建失败",err)
+	//}
    router:=gin.Default()
    
      v1:=router.Group("v1")

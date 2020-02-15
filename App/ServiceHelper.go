@@ -6,7 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-
+type MiddleWare func(next Endpoint) Endpoint
 //业务最终函数原型
 type Endpoint func(ctx context.Context,request interface{}) (response interface{}, err error)
 
@@ -31,6 +31,7 @@ func RegisterHandler(endpoint Endpoint,encodeFunc EncodeRequestFunc, decodeFunc 
 				return
 			}
 		}()
+
 		//参数:=怎么取参数(context)
 		//业务结果,error:=业务最终函数(context,参数)
 		//

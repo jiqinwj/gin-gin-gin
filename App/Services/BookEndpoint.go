@@ -21,8 +21,9 @@ type BookResponse struct {
 
 //  /prods/300
 type BookDetailRequest struct {
-	BookID int `uri:"id" binding:"required,gt=0,max=70000"`
+	BookID int `uri:"id" binding:"required,gt=0,max=7000000"`
 }
+
 
 //@gen(order=1,id="list_endp")
 //图书列表相关的业务最终函数
@@ -33,6 +34,8 @@ func BookListEndPoint(book *BookService)  App.Endpoint {
 		return &BookResponse{Result:result},err
 	}
 }
+
+
 //@gen(order=2,id="detail_endp")
 //图书详细
 func BookDetailEndPoint(book *BookService)  App.Endpoint {
